@@ -1,0 +1,33 @@
+{
+    "name": "hyancat/laravel-oss",
+    "description": "Aliyun OSS adapter for Laravel.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "HyanCat",
+            "email": "hyancat@live.cn"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "illuminate/support": "^5.4",
+        "illuminate/contracts": "^5.4",
+        "illuminate/config": "^5.4",
+        "aliyuncs/oss-sdk-php": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "HyanCat\\Oss\\": "src/"
+        }
+    },
+    "suggest": {
+        "illuminate/filesystem": "Required for laravel or lumen.",
+        "league/flysystem": "Required for using Storage."
+    },
+    "require-dev": {
+        "laravel/lumen-framework": "^5.4",
+        "illuminate/filesystem": "^5.4",
+        "league/flysystem": "^1.0"
+    }
+}
