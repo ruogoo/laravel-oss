@@ -8,6 +8,7 @@
  */
 
 return [
+    'driver'     => 'oss',
     'access_id'  => env('OSS_ACCESS_ID'),
     'access_key' => env('OSS_ACCESS_KEY'),
     'https'      => env('OSS_ENABLE_HTTPS', false),

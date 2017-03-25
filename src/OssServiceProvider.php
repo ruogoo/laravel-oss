@@ -20,18 +20,17 @@ class OssServiceProvider extends ServiceProvider
 
     public function register()
     {
-        //
-    }
-
-    public function boot()
-    {
         $this->app->singleton('hyancat.oss', function ($app) {
             $config = $app['config']["filesystems.disks.oss"];
-
             return $this->makeAdapter($config);
         });
 
         $this->extendOssDriver();
+    }
+
+    public function boot()
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../config/oss.php', 'filesystems.disks.oss');
     }
 
     public function provides()
