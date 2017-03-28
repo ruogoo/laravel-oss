@@ -405,7 +405,9 @@ class OssServiceAdapter extends AbstractAdapter
      */
     public function getSize($path)
     {
-        return $this->getMetadata($path);
+        $meta = $this->getMetadata($path);
+
+        return $meta['size'];
     }
 
     /**
@@ -416,7 +418,9 @@ class OssServiceAdapter extends AbstractAdapter
      */
     public function getMimetype($path)
     {
-        return $this->getMetadata($path);
+        $meta = $this->getMetadata($path);
+
+        return $meta['mimetype'];
     }
 
     /**
@@ -428,7 +432,9 @@ class OssServiceAdapter extends AbstractAdapter
      */
     public function getTimestamp($path)
     {
-        return $this->getMetadata($path);
+        $meta = $this->getMetadata($path);
+
+        return $meta['timestamp'];
     }
 
     /**
