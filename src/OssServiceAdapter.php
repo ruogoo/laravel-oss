@@ -86,38 +86,6 @@ class OssServiceAdapter extends AbstractAdapter
     }
 
     /**
-     * Write using a local file path.
-     *
-     * @param string $path
-     * @param string $localFilePath
-     * @param Config $config Config object
-     * @return array|false false on failure file meta data on success
-     */
-    public function putFile($path, $localFilePath, Config $config)
-    {
-        $object  = $this->applyPathPrefix($path);
-        $options = $this->getOptionsFromConfig($config);
-
-        $options[OssClient::OSS_CHECK_MD5] = true;
-
-        if (! isset($options[OssClient::OSS_CONTENT_TYPE])) {
-            $options[OssClient::OSS_CONTENT_TYPE] = Util::guessMimeType($path, '');
-        }
-
-        try {
-            $this->client->uploadFile($this->bucket, $object, $localFilePath, $options);
-        } catch (OssException $e) {
-            return false;
-        }
-
-        $type               = 'file';
-        $result             = compact('type', 'path');
-        $result['mimetype'] = $options[OssClient::OSS_CONTENT_TYPE];
-
-        return $result;
-    }
-
-    /**
      * Write a new file.
      *
      * @param string $path
