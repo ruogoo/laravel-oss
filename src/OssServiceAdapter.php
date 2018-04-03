@@ -85,6 +85,13 @@ class OssServiceAdapter extends AbstractAdapter
         return $this->client;
     }
 
+    public function getUrl($path)
+    {
+        $object = $this->applyPathPrefix($path);
+
+        return $this->client->getObjectMeta($this->bucket, $object)['oss-request-url'];
+    }
+
     /**
      * Write a new file.
      *
