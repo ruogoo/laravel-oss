@@ -29,5 +29,12 @@
         "laravel/lumen-framework": "^5.4",
         "illuminate/filesystem": "^5.4",
         "league/flysystem": "^1.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "HyanCat\\Oss\\OssServiceProvider"
+            ]
+        }
     }
 }
