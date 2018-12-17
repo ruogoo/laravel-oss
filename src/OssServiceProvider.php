@@ -16,8 +16,6 @@ use OSS\OssClient;
 
 class OssServiceProvider extends ServiceProvider
 {
-    protected $defer = true;
-
     public function boot()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/oss.php', 'filesystems.disks.oss');
