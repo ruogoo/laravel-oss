@@ -37,6 +37,13 @@ class OssServiceAdapter extends AbstractAdapter
     protected $bucket;
 
     /**
+     * cname host
+     *
+     * @var ?string
+     */
+    protected $cname;
+
+    /**
      * @var array
      */
     protected $options = [];
@@ -57,10 +64,11 @@ class OssServiceAdapter extends AbstractAdapter
      * @param string    $prefix
      * @param array     $options
      */
-    public function __construct(OssClient $client, $bucket, $prefix = null, array $options = [])
+    public function __construct(OssClient $client, $bucket, $prefix = null, $cname = null, array $options = [])
     {
         $this->client = $client;
         $this->bucket = $bucket;
+        $this->cname = $cname;
         $this->setPathPrefix($prefix);
         $this->options = array_merge($this->options, $options);
     }
@@ -89,7 +97,16 @@ class OssServiceAdapter extends AbstractAdapter
     {
         $object = $this->applyPathPrefix($path);
 
-        return $this->client->getObjectMeta($this->bucket, $object)['oss-request-url'];
+        $meta = $this->client->getObjectMeta($this->bucket, $object);
+        $url = $meta['oss-request-url'];
+
+        if ($this->cname) {
+            $host = parse_url($url, PHP_URL_HOST);
+            $cnamedUrl = str_replace_first($host, $this->cname, $url);
+            return $cnamedUrl;
+        }
+
+        return $url;
     }
 
     /**
