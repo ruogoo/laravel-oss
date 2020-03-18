@@ -11,9 +11,9 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "illuminate/support": "^5.4|^6.0",
-        "illuminate/contracts": "^5.4|^6.0",
-        "illuminate/config": "^5.4|^6.0",
+        "illuminate/support": "^5.4|^6.0|^7.0",
+        "illuminate/contracts": "^5.4|^6.0|^7.0",
+        "illuminate/config": "^5.4|^6.0|^7.0",
         "aliyuncs/oss-sdk-php": "^2.2"
     },
     "autoload": {
@@ -26,8 +26,8 @@
         "league/flysystem": "Required for using Storage."
     },
     "require-dev": {
-        "laravel/lumen-framework": "^5.4",
-        "illuminate/filesystem": "^5.4",
+        "laravel/lumen-framework": "^5.4|^6.0|^7.0",
+        "illuminate/filesystem": "^5.4|^6.0|^7.0",
         "league/flysystem": "^1.0"
     },
     "extra": {
