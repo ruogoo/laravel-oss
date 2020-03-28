@@ -9,6 +9,7 @@
 
 namespace HyanCat\Oss;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem;
@@ -23,16 +24,16 @@ class OssServiceProvider extends ServiceProvider
         $this->extendOssDriver();
     }
 
-    protected function extendOssDriver()
+    protected function extendOssDriver(): void
     {
         Storage::extend('oss', function ($app, $config) {
-            $config = $app['config']["filesystems.disks.oss"];
-            $adapter = $this->makeAdapter($config);
+            $ossConfig = $app['config']["filesystems.disks.oss"];
+            $adapter = $this->makeAdapter($ossConfig);
             return new Filesystem($adapter);
         });
     }
 
-    protected function makeAdapter($config)
+    protected function makeAdapter($config): OssServiceAdapter
     {
         $accessId = $config['access_id'];
         $accessKey = $config['access_key'];
@@ -40,7 +41,7 @@ class OssServiceProvider extends ServiceProvider
         $bucket = $config['bucket'];
         $cname = $config['cname'];
 
-        $prefix = array_get($config, 'object_prefix');
+        $prefix = Arr::get($config, 'object_prefix');
 
         $client = new OssClient($accessId, $accessKey, $endPoint);
         $adapter = new OssServiceAdapter($client, $bucket, $prefix, $cname);

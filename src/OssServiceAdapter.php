@@ -9,6 +9,7 @@
 
 namespace HyanCat\Oss;
 
+use Illuminate\Support\Str;
 use League\Flysystem\Adapter\AbstractAdapter;
 use League\Flysystem\Adapter\Polyfill\NotSupportingVisibilityTrait;
 use League\Flysystem\Adapter\Polyfill\StreamedTrait;
@@ -25,7 +26,7 @@ class OssServiceAdapter extends AbstractAdapter
     /**
      * Aliyun Oss Client.
      *
-     * @var \OSS\OssClient
+     * @var OssClient
      */
     protected $client;
 
@@ -86,7 +87,7 @@ class OssServiceAdapter extends AbstractAdapter
     /**
      * Get the Aliyun Oss Client instance.
      *
-     * @return \OSS\OssClient
+     * @return OssClient
      */
     public function getClient()
     {
@@ -102,7 +103,7 @@ class OssServiceAdapter extends AbstractAdapter
 
         if ($this->cname) {
             $host = parse_url($url, PHP_URL_HOST);
-            $cnamedUrl = str_replace_first($host, $this->cname, $url);
+            $cnamedUrl = Str::replaceFirst($host, $this->cname, $url);
             return $cnamedUrl;
         }
 
@@ -119,14 +120,14 @@ class OssServiceAdapter extends AbstractAdapter
      */
     public function write($path, $contents, Config $config)
     {
-        $object  = $this->applyPathPrefix($path);
+        $object = $this->applyPathPrefix($path);
         $options = $this->getOptionsFromConfig($config);
 
-        if (! isset($options[OssClient::OSS_LENGTH])) {
+        if (!isset($options[OssClient::OSS_LENGTH])) {
             $options[OssClient::OSS_LENGTH] = Util::contentSize($contents);
         }
 
-        if (! isset($options[OssClient::OSS_CONTENT_TYPE])) {
+        if (!isset($options[OssClient::OSS_CONTENT_TYPE])) {
             $options[OssClient::OSS_CONTENT_TYPE] = Util::guessMimeType($path, $contents);
         }
 
@@ -136,10 +137,10 @@ class OssServiceAdapter extends AbstractAdapter
             return false;
         }
 
-        $type               = 'file';
-        $result             = compact('type', 'path', 'contents');
+        $type = 'file';
+        $result = compact('type', 'path', 'contents');
         $result['mimetype'] = $options[OssClient::OSS_CONTENT_TYPE];
-        $result['size']     = $options[OssClient::OSS_LENGTH];
+        $result['size'] = $options[OssClient::OSS_LENGTH];
 
         return $result;
     }
@@ -166,7 +167,7 @@ class OssServiceAdapter extends AbstractAdapter
      */
     public function rename($path, $newPath)
     {
-        if (! $this->copy($path, $newPath)) {
+        if (!$this->copy($path, $newPath)) {
             return false;
         }
 
@@ -182,7 +183,7 @@ class OssServiceAdapter extends AbstractAdapter
      */
     public function copy($path, $newPath)
     {
-        $object    = $this->applyPathPrefix($path);
+        $object = $this->applyPathPrefix($path);
         $newObject = $this->applyPathPrefix($newPath);
 
         try {
@@ -250,7 +251,7 @@ class OssServiceAdapter extends AbstractAdapter
      */
     public function createDir($dirName, Config $config)
     {
-        $object  = $this->applyPathPrefix($dirName);
+        $object = $this->applyPathPrefix($dirName);
         $options = $this->getOptionsFromConfig($config);
 
         try {
@@ -311,11 +312,11 @@ class OssServiceAdapter extends AbstractAdapter
     {
         $directory = $this->applyPathPrefix($directory);
 
-        $bucket     = $this->bucket;
-        $delimiter  = '/';
+        $bucket = $this->bucket;
+        $delimiter = '/';
         $nextMarker = '';
-        $maxKeys    = 1000;
-        $options    = [
+        $maxKeys = 1000;
+        $options = [
             'delimiter' => $delimiter,
             'prefix'    => $directory,
             'max-keys'  => $maxKeys,
@@ -348,7 +349,7 @@ class OssServiceAdapter extends AbstractAdapter
 
         foreach ($prefixList as $prefixInfo) {
             if ($recursive) {
-                $next   = $this->listContents($this->removePathPrefix($prefixInfo->getPrefix()), $recursive);
+                $next = $this->listContents($this->removePathPrefix($prefixInfo->getPrefix()), $recursive);
                 $result = array_merge($result, $next);
             } else {
                 $result[] = [
@@ -441,11 +442,11 @@ class OssServiceAdapter extends AbstractAdapter
     public function getSignedDownloadUrl($path, $expires = 3600, $host_name = '', $use_ssl = false)
     {
         $object = $this->applyPathPrefix($path);
-        $url    = $this->client->signUrl($this->bucket, $object, $expires);
+        $url = $this->client->signUrl($this->bucket, $object, $expires);
 
-        if (! empty($host_name) || $use_ssl) {
+        if (!empty($host_name) || $use_ssl) {
             $parse_url = parse_url($url);
-            if (! empty($host_name)) {
+            if (!empty($host_name)) {
                 $parse_url['host'] = $this->bucket . '.' . $host_name;
             }
             if ($use_ssl) {
@@ -468,7 +469,7 @@ class OssServiceAdapter extends AbstractAdapter
     {
         $options = $this->options;
         foreach (static::$mappingOptions as $option => $ossOption) {
-            if (! $config->has($option)) {
+            if (!$config->has($option)) {
                 continue;
             }
             $options[$ossOption] = $config->get($option);
