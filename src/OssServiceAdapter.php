@@ -7,7 +7,7 @@
  * Copyright (C) HyanCat. All rights reserved.
  */
 
-namespace HyanCat\Oss;
+namespace Ruogoo\Oss;
 
 use Illuminate\Support\Str;
 use League\Flysystem\Adapter\AbstractAdapter;

@@ -1,5 +1,5 @@
 {
-    "name": "hyancat/laravel-oss",
+    "name": "ruogoo/laravel-oss",
     "description": "Aliyun OSS adapter for Laravel.",
     "type": "library",
     "license": "MIT",
@@ -11,14 +11,14 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "illuminate/support": "^5.4|^6.0|^7.0",
-        "illuminate/contracts": "^5.4|^6.0|^7.0",
-        "illuminate/config": "^5.4|^6.0|^7.0",
+        "illuminate/support": "^5.4|^6.0|^7.0|^8.0",
+        "illuminate/contracts": "^5.4|^6.0|^7.0|^8.0",
+        "illuminate/config": "^5.4|^6.0|^7.0|^8.0",
         "aliyuncs/oss-sdk-php": "^2.2"
     },
     "autoload": {
         "psr-4": {
-            "HyanCat\\Oss\\": "src/"
+            "Ruogoo\\Oss\\": "src/"
         }
     },
     "suggest": {
@@ -26,14 +26,14 @@
         "league/flysystem": "Required for using Storage."
     },
     "require-dev": {
-        "laravel/lumen-framework": "^5.4|^6.0|^7.0",
-        "illuminate/filesystem": "^5.4|^6.0|^7.0",
+        "laravel/lumen-framework": "^5.4|^6.0|^7.0|^8.0",
+        "illuminate/filesystem": "^5.4|^6.0|^7.0|^8.0",
         "league/flysystem": "^1.0"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "HyanCat\\Oss\\OssServiceProvider"
+                "Ruogoo\\Oss\\OssServiceProvider"
             ]
         }
     }
