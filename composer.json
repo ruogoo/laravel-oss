@@ -14,7 +14,7 @@
         "illuminate/support": "^5.4|^6.0|^7.0|^8.0",
         "illuminate/contracts": "^5.4|^6.0|^7.0|^8.0",
         "illuminate/config": "^5.4|^6.0|^7.0|^8.0",
-        "aliyuncs/oss-sdk-php": "^2.2"
+        "aliyuncs/oss-sdk-php": "*"
     },
     "autoload": {
         "psr-4": {
